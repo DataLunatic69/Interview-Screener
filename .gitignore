@@ -1,0 +1,14 @@
+.venv/
+.env
+__pycahche__/
+*.pyc
+.DS_Store
+.idea/
+.vscode/
+*.log
+coverage/
+dist/
+build/
+*.egg-info/
+.ipynb_checkpoints/
+.envrc
