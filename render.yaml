@@ -14,17 +14,9 @@ services:
       - key: LOG_LEVEL
         value: INFO
       - key: REDIS_URL
-        fromService:
-          type: redis
-          name: interview-screener-redis
-          property: connectionString
+        value: redis://red-d4i4acogjchc73dkt9a0:6379
       - key: ENABLE_CACHING
         value: "true"
-      - key: PORT
-        fromService:
-          type: web
-          name: interview-screener-api
-          property: port
     healthCheckPath: /health
     autoDeploy: true
 
