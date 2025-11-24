@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     )
     
     # Groq API Configuration
-    groq_api_key: str = Field(default=os.getenv("GROQ_API_KEY"), alias="GROQ_API_KEY")
+    groq_api_key: str = Field(default=os.getenv("GROQ_API_KEY", ""), alias="GROQ_API_KEY")
     llm_model: str = Field(
         default="llama-3.3-70b-versatile",
         alias="LLM_MODEL"
