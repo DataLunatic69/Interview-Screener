@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: interview-screener-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: starter
+    region: oregon
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: interview-screener-redis
+          property: connectionString
+      - key: ENABLE_CACHING
+        value: "true"
+      - key: PORT
+        fromService:
+          type: web
+          name: interview-screener-api
+          property: port
+    healthCheckPath: /health
+    autoDeploy: true
+
+databases:
+  - name: interview-screener-redis
+    plan: starter
+    type: redis
+    maxmemoryPolicy: allkeys-lru
+
