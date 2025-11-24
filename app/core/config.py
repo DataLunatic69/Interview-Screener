@@ -4,7 +4,7 @@ Loads from environment variables with validation.
 """
 from functools import lru_cache
 from typing import List
-
+import os
 from pydantic import Field, validator
 from pydantic_settings import BaseSettings
 
