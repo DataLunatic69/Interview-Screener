@@ -25,13 +25,24 @@ class Settings(BaseSettings):
     )
     
     # Groq API Configuration
-    groq_api_key: str = Field(..., alias="GROQ_API_KEY")
+    groq_api_key: str = Field(default=os.getenv("GROQ_API_KEY"), alias="GROQ_API_KEY")
     llm_model: str = Field(
         default="llama-3.3-70b-versatile",
         alias="LLM_MODEL"
     )
     llm_temperature: float = Field(default=0.3, alias="LLM_TEMPERATURE")
     llm_max_tokens: int = Field(default=2000, alias="LLM_MAX_TOKENS")
+    
+    @validator("groq_api_key")
+    def validate_groq_api_key(cls, v):
+        """Warn if API key is not set."""
+        if not v or v == "":
+            import warnings
+            warnings.warn(
+                "GROQ_API_KEY is not set. LLM features will not work. "
+                "Set it in your environment variables or .env file."
+            )
+        return v
     
     # Redis Configuration
     redis_url: str = Field(default="redis://localhost:6379", alias="REDIS_URL")

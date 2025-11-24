@@ -22,6 +22,12 @@ def get_langchain_llm() -> ChatGroq:
     Returns:
         Configured ChatGroq instance
     """
+    if not settings.groq_api_key:
+        raise ValueError(
+            "GROQ_API_KEY is not set. Please set it in your environment variables. "
+            "Get your API key from https://console.groq.com"
+        )
+    
     logger.info(
         f"Initializing LangChain LLM: model={settings.llm_model}, "
         f"temperature={settings.llm_temperature}, max_tokens={settings.llm_max_tokens}"
