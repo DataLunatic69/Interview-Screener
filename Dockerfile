@@ -1,5 +1,5 @@
 # Multi-stage build for optimized image size
-FROM python:3.11-slim as builder
+FROM python:3.11-slim AS builder
 
 # Set working directory
 WORKDIR /app
@@ -10,17 +10,14 @@ RUN apt-get update && apt-get install -y \
     g++ \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Poetry for dependency management
-RUN pip install --no-cache-dir poetry==1.7.1
+# Upgrade pip
+RUN pip install --no-cache-dir --upgrade pip
 
 # Copy dependency files
-COPY pyproject.toml ./
-
-# Configure poetry to not create virtual env (we're in a container)
-RUN poetry config virtualenvs.create false
+COPY requirements.txt ./
 
 # Install dependencies
-RUN poetry install --no-dev --no-interaction --no-ansi
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Production stage
 FROM python:3.11-slim

@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   api:
     build:
@@ -7,12 +5,13 @@ services:
       dockerfile: Dockerfile
     container_name: interview-screener-api
     ports:
-      - "8000:8000"
+      - "8001:8000"
     environment:
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
       - ENVIRONMENT=production
-      - LOG_LEVEL=info
+      - LOG_LEVEL=INFO
       - REDIS_URL=redis://redis:6379
+      - ENABLE_CACHING=true
     depends_on:
       - redis
     volumes:
